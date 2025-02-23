@@ -12,7 +12,7 @@ MLX_PATH = mlx
 MLX_FLAGS   = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 # Source files
-SRCS        = checkmap.c main.c so_long.c input_handling.c
+SRCS        = checkmap.c main.c so_long.c input_handling.c flood.c helpers.c loader.c animations.c
 OBJS        = $(SRCS:.c=.o)
 
 # Rules
