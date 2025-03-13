@@ -6,7 +6,7 @@
 /*   By: rroundi <rroundi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:39:58 by rroundi           #+#    #+#             */
-/*   Updated: 2025/02/23 18:39:50 by rroundi          ###   ########.fr       */
+/*   Updated: 2025/03/13 00:41:57 by rroundi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <stdio.h>
 # include <mlx.h>
 # include <stdlib.h>
-# include "../solong/libft/libft.h"
+# include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 
 typedef struct s_point
 {
@@ -47,6 +48,7 @@ typedef struct s_game
 	void	*p4_img;
 	char	**map;
 	char	**map_copy;
+	char	**map_copy2;
 	int		img_width;
 	int		img_height;
 	int		width;
@@ -56,6 +58,9 @@ typedef struct s_game
 	int		collec;
 	int		moves;
 	char	*move;
+	int		player_on_exit;
+	int		e_x;
+	int		e_y;	
 	t_point	pos;
 }	t_game;
 
@@ -75,7 +80,7 @@ int		key_press(int keycode, t_game *game); // handle key press
 int		hooks(t_game *game); // hooks for the game
 int		close_window(t_game *game); // close the window
 int		move_player(t_game *game, int x, int y); // move the player
-void	put_string(t_game *game);
+void	put_string(t_game *gamesc);
 int		check_lines(char	*line,	int len, int fd, int height);
 void	check_pieces(t_game	*game, char	**map);
 void	count_pieces(char c, t_game *game, char **map);
@@ -87,5 +92,9 @@ void	player_animation(t_game	*game, int x, int y);
 void	key_animation(t_game	*game, int x, int y);
 void	door_animation(t_game	*game, int x, int y);
 void	render_helper(t_game	*game, int x, int y);
+void	free_images(t_game	*game);
+void	free_more(t_game *game);
+void	validate_path1(char	**map, int height, t_point pos);
+void	ft_putstr(char *s);
 
 #endif

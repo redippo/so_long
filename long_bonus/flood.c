@@ -6,11 +6,11 @@
 /*   By: rroundi <rroundi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:59:04 by rroundi           #+#    #+#             */
-/*   Updated: 2025/02/19 21:31:23 by rroundi          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:37:05 by rroundi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 void	flood_fill(char **map, int height, t_point pos)
 {
@@ -22,7 +22,7 @@ void	flood_fill(char **map, int height, t_point pos)
 
 	len = strnew(map[0]);
 	if (pos.x < 0 || pos.y < 0 || map[pos.x][pos.y] == '1' ||
-		pos.x >= height || map[pos.x][pos.y] == 'F' || 
+		pos.x >= height || map[pos.x][pos.y] == 'F' ||
 		pos.y >= len)
 		return ;
 	map[pos.x][pos.y] = 'F';
@@ -77,9 +77,8 @@ void	validate_path(char **map, int height)
 		{
 			if (map[i][j] == 'E' || map[i][j] == 'C')
 			{
-				perror("invalid map no way to win");
 				free_map(map);
-				exit(1);
+				ft_putstr("error\ninvalid map no way to win");
 			}
 			j++;
 		}
@@ -91,10 +90,10 @@ void	validate_path(char **map, int height)
 
 t_point	player_pos(char **map, int height)
 {
-	int				len;
-	t_point			player;
-	int				i;
-	int				j;
+	t_point		player;
+	int			len;
+	int			i;
+	int			j;
 
 	i = -1;
 	len = strnew(map[0]);
@@ -116,17 +115,25 @@ t_point	player_pos(char **map, int height)
 	return (player);
 }
 
-void	free_map(char	**map)
+void	validate_path1(char **map, int height, t_point pos)
 {
 	int	i;
+	int	len;
+	int	j;
 
 	i = 0;
-	if (!map)
-		return ;
-	while (map[i])
+	len = strnew(map[0]);
+	while (i < height)
 	{
-		free(map[i]);
+		j = 0;
+		while (j < len)
+		{
+			if (map[i][j] == 'E')
+				map[i][j] = '1';
+			j++;
+		}
 		i++;
 	}
-	free(map);
+	flood_fill(map, height, pos);
+	validate_path(map, height);
 }

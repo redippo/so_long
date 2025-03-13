@@ -6,11 +6,11 @@
 /*   By: rroundi <rroundi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:13:55 by rroundi           #+#    #+#             */
-/*   Updated: 2025/02/23 18:40:41 by rroundi          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:35:02 by rroundi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 int	key_press(int keycode, t_game	*game)
 {

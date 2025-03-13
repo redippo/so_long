@@ -6,11 +6,11 @@
 /*   By: rroundi <rroundi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:27:00 by rroundi           #+#    #+#             */
-/*   Updated: 2025/02/23 18:58:52 by rroundi          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:35:34 by rroundi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 void	door_animation(t_game	*game, int x, int y)
 {
@@ -77,4 +77,45 @@ void	player_animation(t_game	*game, int x, int y)
 	counter++;
 	if (counter > 40)
 		counter = 0;
+}
+
+void	free_images(t_game	*game)
+{
+	if (game->wall_img)
+		mlx_destroy_image(game->mlx, game->wall_img);
+	if (game->floor_img)
+		mlx_destroy_image(game->mlx, game->floor_img);
+	if (game->e_img)
+		mlx_destroy_image(game->mlx, game->e_img);
+	if (game->door1)
+		mlx_destroy_image(game->mlx, game->door1);
+	if (game->door2)
+		mlx_destroy_image(game->mlx, game->door2);
+	if (game->door3)
+		mlx_destroy_image(game->mlx, game->door3);
+	if (game->door4)
+		mlx_destroy_image(game->mlx, game->door4);
+	if (game->key1)
+		mlx_destroy_image(game->mlx, game->key1);
+	if (game->key2)
+		mlx_destroy_image(game->mlx, game->key2);
+	if (game->key3)
+		mlx_destroy_image(game->mlx, game->key3);
+	if (game->key4)
+		mlx_destroy_image(game->mlx, game->key4);
+	free_more(game);
+}
+
+void	free_more(t_game *game)
+{
+	if (game->obstacle_img)
+		mlx_destroy_image(game->mlx, game->obstacle_img);
+	if (game->p1_img)
+		mlx_destroy_image(game->mlx, game->p1_img);
+	if (game->p2_img)
+		mlx_destroy_image(game->mlx, game->p2_img);
+	if (game->p3_img)
+		mlx_destroy_image(game->mlx, game->p3_img);
+	if (game->p4_img)
+		mlx_destroy_image(game->mlx, game->p4_img);
 }

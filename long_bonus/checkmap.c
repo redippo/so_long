@@ -6,23 +6,11 @@
 /*   By: rroundi <rroundi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:33:00 by rroundi           #+#    #+#             */
-/*   Updated: 2025/02/23 13:27:41 by rroundi          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:37:08 by rroundi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-
-int	check_format(char	*mapstring)
-{
-	int	len;
-
-	len = ft_strlen(mapstring);
-	if (len < 4)
-		return (0);
-	if (ft_strncmp(&mapstring[len - 4], ".ber", 4))
-		return (0);
-	return (1);
-}
+#include "../so_long.h"
 
 void	check_wall(char	**map, int height)
 {
@@ -35,9 +23,8 @@ void	check_wall(char	**map, int height)
 	{
 		if (map[0][i] != '1' || map[height - 1][i] != '1')
 		{
-			perror("Error\ninvalid map not surrounded by walls");
 			free_map(map);
-			exit(1);
+			ft_putstr("error\nmap not surrounded by walls");
 		}
 	}
 	i = -1;
@@ -45,9 +32,8 @@ void	check_wall(char	**map, int height)
 	{
 		if (map[i][0] != '1' || map[i][len -1] != '1')
 		{
-			perror("invalid map not surrounded by walls");
 			free_map(map);
-			exit(1); 
+			ft_putstr("error\nmap not surrounded by walls");
 		}
 	}
 }
@@ -59,14 +45,16 @@ char	**store_map(char *mapstring, int height)
 
 	map = malloc ((height + 1) * sizeof(char *));
 	if (!map)
-		return (NULL);
+		exit (1);
 	fd = open (mapstring, O_RDONLY);
 	if (fd < 0)
 	{
 		free(map);
-		return (NULL);
+		close (fd);
+		ft_putstr("error\nfile not oppenned");
 	}
 	map = read_map(map, fd, height);
+	close(fd);
 	return (map);
 }
 
@@ -83,17 +71,13 @@ int	count_lines(char *mapstring)
 	fd = open(mapstring, O_RDONLY);
 	if (fd < 0)
 	{
-		perror ("file not openned");
 		close (fd);
-		return (0);
+		ft_putstr("error\nbad file descriptor");
 	}
 	height = check_lines(line, len, fd, height);
-	free(line);
-	if (len == height)
-	{
-		perror("map not rectangular");
-		return (0);
-	}
+	close(fd);
+	if (height > 43)
+		ft_putstr("error\nmap to big");
 	return (height);
 }
 

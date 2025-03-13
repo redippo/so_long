@@ -6,11 +6,11 @@
 /*   By: rroundi <rroundi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:48:20 by rroundi           #+#    #+#             */
-/*   Updated: 2025/02/23 18:39:33 by rroundi          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:36:39 by rroundi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 int	ft_init_game(t_game	*game)
 {
@@ -27,11 +27,6 @@ int	ft_init_game(t_game	*game)
 		return (0);
 	game->moves = 0;
 	load_images(game);
-	if (!game->wall_img)
-	{
-		perror("wall image not loaded");
-		return (0);
-	}
 	return (1);
 }
 
@@ -68,8 +63,10 @@ void	render_helper(t_game	*game, int x, int y)
 	else if (game->map[y][x] == 'C')
 		key_animation(game, x, y);
 	else if (game->map[y][x] == 'E' && game->collec != 0)
+	{
 		mlx_put_image_to_window(game->mlx, game->mlx_win, 
 			game->e_img, x * 32, y * 32);
+	}
 	else if (game->map[y][x] == 'O')
 		mlx_put_image_to_window(game->mlx, game->mlx_win, 
 			game->obstacle_img, x * 32, y * 32);

@@ -1,50 +1,53 @@
 NAME        = so_long
-CC          = gcc
+NAME_BONUS   = bonus
+CC          = cc
 FLAGS       = -Wall -Wextra -Werror
 
 # Paths
-LIBFT_PATH  = ./libft/
-LIBFT_FILE  = libft.a
-LIBFT_LIB   = $(LIBFT_PATH)$(LIBFT_FILE)
+# LIBFT_PATH  = libft/
+# LIBFT_FILE  = libft.a
+# LIBFT_LIB   = $(LIBFT_PATH)$(LIBFT_FILE)
 
 # MLX Settings
 MLX_PATH = mlx
-MLX_FLAGS   = -Lmlx -lmlx -framework OpenGL -framework AppKit
+MLX_FLAGS   = -lmlx -framework OpenGL -framework AppKit
 
 # Source files
-SRCS        = checkmap.c main.c so_long.c input_handling.c flood.c helpers.c loader.c animations.c
-OBJS        = $(SRCS:.c=.o)
+SRCS   = 	long/checkmap.c long/main.c long/so_long.c long/input_handling.c long/flood.c long/helpers.c long/loader.c long/animations.c\
+			get_next_line/get_next_line.c get_next_line/get_next_line_utils.c\
+			libft/ft_itoa.c libft/ft_strncmp.c libft/ft_strlen.c libft/ft_strdup.c
 
-# Rules
-.c.o:
-	$(CC) $(FLAGS) -c $< -o $@
+SRCS_BONUS =	long_bonus/checkmap.c long_bonus/main.c long_bonus/so_long.c long_bonus/input_handling.c long_bonus/flood.c long_bonus/helpers.c long_bonus/loader.c long_bonus/animations.c\
+				get_next_line/get_next_line.c get_next_line/get_next_line_utils.c\
+				libft/ft_itoa.c libft/ft_strncmp.c libft/ft_strlen.c libft/ft_strdup.c
 
-all: $(NAME)
+OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+
+#.SILENT:
+ all: $(NAME)
+
 
 # Build libft
-libft:
-	@echo "\nCompiling libft..."
-	@make -C $(LIBFT_PATH)
-	@echo "Libft compiled successfully\n"
 
 # Main program
-$(NAME): libft $(OBJS)
-	@echo "\nCompiling $(NAME)..."
-	$(CC) $(OBJS) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
-	@echo "$(NAME) compiled successfully\n"
+$(NAME): so_long.h $(OBJS)
+	$(CC) $(FLAGS) $(OBJS)  $(MLX_FLAGS) -o $(NAME)
+
+$(NAME_BONUS): $(OBJS_BONUS)
+	$(CC) $(FLAGS) $(OBJS_BONUS)  $(MLX_FLAGS) -o $(NAME_BONUS)
+# libft:
+# 	@make -C $(LIBFT_PATH)
+.c.o:
+	$(CC) $(FLAGS) -c $< -o $@
+#bonus 
 
 clean:
-	@echo "\nCleaning object files..."
-	@make clean -C $(LIBFT_PATH)
-	@rm -f $(OBJS)
-	@echo "Clean completed\n"
+	rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-	@echo "\nRemoving executable..."
-	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_PATH)
-	@echo "Full clean completed\n"
+	rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re
